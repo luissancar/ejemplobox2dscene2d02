@@ -25,7 +25,7 @@ import com.mygdx.game.entities.SkipeEntity;
 import java.util.ArrayList;
 
 /**
- * Created by luissancar on 30/12/16.
+ * Created by luissancar on   30/12/16.
  */
 
 public class GameScreen extends BaseScreen{
