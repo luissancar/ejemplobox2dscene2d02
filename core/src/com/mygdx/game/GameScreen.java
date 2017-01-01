@@ -87,7 +87,13 @@ public class GameScreen extends BaseScreen{
         player=new PlayerEntity(world,playerTexture,new Vector2(1.5f,1.5f));
         floorlist.add(new FloorEntiy(world,floorTexture,overfloorTexture,0,1000,1));
         floorlist.add(new FloorEntiy(world,floorTexture,overfloorTexture,12,10,2));  //añadimos escalones
+        floorlist.add(new FloorEntiy(world,floorTexture,overfloorTexture,30,10,2));
+
         spikelist.add(new SkipeEntity(world,spikeTexture,6,1));
+        spikelist.add(new SkipeEntity(world,spikeTexture,18,2));
+        spikelist.add(new SkipeEntity(world,spikeTexture,35,2));
+        spikelist.add(new SkipeEntity(world,spikeTexture,50,1));
+
 
         stage.addActor(player);
         for (FloorEntiy floor: floorlist){
