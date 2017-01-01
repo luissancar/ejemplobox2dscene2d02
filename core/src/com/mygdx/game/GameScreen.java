@@ -5,6 +5,8 @@ package com.mygdx.game;
  */
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -34,8 +36,14 @@ public class GameScreen extends BaseScreen{
 
     private java.util.List<SkipeEntity> spikelist=new ArrayList<SkipeEntity>();
 
+    private Sound jumpSound, dieSound;  // en canales diferentes
+    private Music music;                // no lo carga completamente al inicializar el juego
+
     public GameScreen(MyGdxGame game) {
         super(game);
+        jumpSound= game.getManager().get("audio/jump.ogg");
+        dieSound= game.getManager().get("audio/die.ogg");
+        music=game.getManager().get("audio/song.ogg");
         stage =new Stage(new FitViewport(640,360));
         world=new World(new Vector2(0,-10), true);
 
@@ -51,11 +59,17 @@ public class GameScreen extends BaseScreen{
                     player.setJumping(false);
                 }
                 if (Gdx.input.isTouched()){
+                    jumpSound.play();
                     player.setMustJump(true);
                 }
 
                 if (areCollided(contact,"player","spike")) {
-                    player.setAlive(false);
+                    if (player.isAlive()){
+                        player.setAlive(false);
+                        dieSound.play();
+                        music.stop();
+                        System.out.println("Game Over");}
+
                 }
 
             }
@@ -102,6 +116,8 @@ public class GameScreen extends BaseScreen{
         for (SkipeEntity spike: spikelist){
             stage.addActor(spike);
         }
+        music.setVolume(0.7f);
+        music.play();
     }
 
     @Override
@@ -128,6 +144,10 @@ public class GameScreen extends BaseScreen{
             /// transladamos la cámara  a la direccion del player
             stage.getCamera().translate(Constans.SPEED_PLAYER * delta * Constans.PIXELS_IN_METER, 0, 0);
     }
+        if (Gdx.input.justTouched()) {
+            jumpSound.play();
+            player.jump();
+        }
         stage.act();
         world.step(delta,6,2);
         stage.draw();
