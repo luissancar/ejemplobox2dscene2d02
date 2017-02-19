@@ -141,7 +141,7 @@ public class GameScreen extends BaseScreen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (player.getX() > 150 && player.isAlive()){ //si se ha movido
-            /// transladamos la cámara  a la direccion del player
+            /// trasladamos la cámara  a la direccion del player
             stage.getCamera().translate(Constans.SPEED_PLAYER * delta * Constans.PIXELS_IN_METER, 0, 0);
     }
         if (Gdx.input.justTouched()) {
